@@ -1,0 +1,45 @@
+#include <iostream>
+#include <unordered_map>
+#include <string>
+using namespace std;
+ 
+// Функция для преобразования римской цифры в соответствующее целочисленное значение
+int getIntegerValue(string s)
+{
+    // базовый случай: пустая строка
+    if (s.empty()) {
+        return 0;
+    }
+ 
+    // Преобразование римских чисел в целочисленные
+    unordered_map<char, int> mapping = {
+        {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}
+    };
+ 
+    // инициализируем сумму 0
+    int value = 0;
+ 
+    // начинаем цикл с start
+    for (int i = 0; i < s.length(); i++)
+    {
+        // если текущий char имеет меньшее значение, чем его следующий char,
+        // уменьшаем сумму на соответствующее римское число для этого символа
+        if (i + 1 < s.length() && mapping[s[i]] < mapping[s[i + 1]]) {
+            value -= mapping[s[i]];
+        }
+        // иначе увеличиваем сумму на соответствующее римское число
+        else {
+            value += mapping[s[i]];
+        }
+    }
+ 
+    return value;
+}
+ 
+int main()
+{
+    string s = "XXI";
+    cout << getIntegerValue(s);
+ 
+    return 0;
+}
